@@ -1,11 +1,10 @@
-/* Reset básico */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
-/* Sección del carrito */
+
 #carrito {
     max-width: 600px;
     margin: 2rem auto;
@@ -48,7 +47,7 @@ body {
     margin-top: 1rem;
 }
 
-/* Estilo de botones centrados */
+
 #botones-container {
     display: flex;
     justify-content: center;
@@ -71,7 +70,6 @@ body {
     background-color: #0056b3;
 }
 
-/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -105,7 +103,6 @@ body {
     cursor: pointer;
 }
 
-/* Inputs de pago */
 .modal-contenido input {
     width: 100%;
     padding: 8px;
@@ -113,18 +110,15 @@ body {
     box-sizing: border-box;
 }
 
-/* Ocultar campos de pago */
 .hidden {
     display: none;
 }
 
-/* Responsive */
 @media (max-width: 600px) {
     .modal-contenido {
         padding: 1rem;
     }
 }
-/* =================== ADAPTACIÓN PARA MÓVILES =================== */
 
 @media (max-width: 768px) {
     
