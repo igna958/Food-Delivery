@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Carrito</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<section id="carrito">
+    <h2>Mi Carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <p id="total">Total: $0.00</p>
+    <button id="finalizar-compra">Finalizar Compra</button>
+    <button id="volver">Volver</button>
+
+</section>
+
+<!-- Modal de Pago -->
+<div id="modal-pago" class="modal" style="display: none;">
+    <div class="modal-contenido">
+        <span id="cerrar-pago" class="cerrar" style="cursor:pointer;">&times;</span>
+        <h3>Selecciona el Método de Pago</h3>
+        <button id="pago-efectivo">Pago en Efectivo</button>
+        <button id="pago-tarjeta">Pago con Tarjeta</button>
+       
+        <div id="efectivo-campo" class="hidden">
+            <label for="efectivo">Cantidad: </label>
+            <input type="number" id="efectivo" placeholder="Ingresa monto en efectivo">
+            <p id="cambio"></p>
+        </div>
+       
+        <div id="tarjeta-campo" class="hidden">
+            <label for="tarjeta-numero">Número de tarjeta: </label>
+            <input type="text" id="tarjeta-numero" placeholder="Ingresa número de tarjeta">
+            <label for="tarjeta-expiracion">Fecha de expiración: </label>
+            <input type="text" id="tarjeta-expiracion" placeholder="MM/AA">
+            <label for="tarjeta-cvc">CVC: </label>
+            <input type="text" id="tarjeta-cvc" placeholder="CVC">
+        </div>
+
+        <button id="confirmar-pago">Confirmar Pago</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const listaCarrito = document.getElementById('lista-carrito');
+        const totalTexto = document.getElementById('total');
+        const modalPago = document.getElementById('modal-pago');
+        const cerrarPago = document.getElementById('cerrar-pago');
+        const pagoEfectivo = document.getElementById('pago-efectivo');
+        const pagoTarjeta = document.getElementById('pago-tarjeta');
+        const efectivoCampo = document.getElementById('efectivo-campo');
+        const tarjetaCampo = document.getElementById('tarjeta-campo');
+        const confirmarPagoBtn = document.getElementById('confirmar-pago');
+        const cambioTexto = document.getElementById('cambio');
+        const efectivoInput = document.getElementById('efectivo');
+        const volverBtn = document.getElementById('volver');
+
+        function renderCarrito() {
+            listaCarrito.innerHTML = '';
+            let total = 0;
+
+            carrito.forEach((producto, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="carrito-item">
+                        <span>${producto.nombre} - $${producto.precio.toFixed(2)}</span>
+                        <button class="eliminar" data-index="${index}">x</button>
+                    </div>
+                `;
+                listaCarrito.appendChild(li);
+                total += producto.precio;
+            });
+
+            totalTexto.textContent = `Total: $${total.toFixed(2)}`;
+
+            document.querySelectorAll('.eliminar').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = btn.getAttribute('data-index');
+                    carrito.splice(index, 1);
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
+                    renderCarrito();
+                });
+            });
+        }
+
+        document.getElementById('finalizar-compra').addEventListener('click', () => {
+            if (carrito.length === 0) {
+                alert('Tu carrito está vacío.');
+                return;
+            }
+            modalPago.style.display = 'flex';
+        });
+
+        cerrarPago.addEventListener('click', () => {
+            modalPago.style.display = 'none';
+        });
+
+        volverBtn.addEventListener('click', () => {
+            history.back();
+        });
+
+        pagoEfectivo.addEventListener('click', () => {
+            efectivoCampo.classList.remove('hidden');
+            tarjetaCampo.classList.add('hidden');
+        });
+
+        pagoTarjeta.addEventListener('click', () => {
+            tarjetaCampo.classList.remove('hidden');
+            efectivoCampo.classList.add('hidden');
+        });
+
+        efectivoInput.addEventListener('input', () => {
+            const total = carrito.reduce((sum, p) => sum + p.precio, 0);
+            const montoEfectivo = parseFloat(efectivoInput.value);
+            if (!isNaN(montoEfectivo) && montoEfectivo >= total) {
+                const cambio = montoEfectivo - total;
+                cambioTexto.textContent = `Cambio: $${cambio.toFixed(2)}`;
+            } else {
+                cambioTexto.textContent = '';
+            }
+        });
+
+        confirmarPagoBtn.addEventListener('click', () => {
+            alert('Compra finalizada. ¡Gracias por tu compra!');
+            carrito = [];
+            localStorage.removeItem('carrito');
+            renderCarrito();
+            modalPago.style.display = 'none';
+        });
+
+        renderCarrito();
+    });
+</script>
+
+</body>
+</html>

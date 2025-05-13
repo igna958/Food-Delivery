@@ -1,0 +1,678 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5; 
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header {
+    background-color: #1b1b1b; 
+    color: #fff;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+header .logo h1 {
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+header .contacto {
+    display: flex;
+    align-items: center;
+}
+
+header .contacto span {
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+header .contacto .redes a {
+    color: #fff;
+    margin-left: 15px;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+header .contacto .redes a:hover {
+    color: #ffb300;
+}
+
+header .logo img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+header .logo img:hover {
+    transform: scale(1.05);
+}
+
+
+header .search-input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 14px;
+    width: 250px;
+    transition: all 0.3s;
+}
+
+header .search-input:focus {
+    border-color: #ffb300;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.modal-contenido h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.modal-contenido input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.modal-contenido input:focus {
+    border-color: #ffb300;
+}
+
+.modal-contenido button {
+    padding: 12px;
+    background-color: #1b1b1b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modal-contenido button:hover {
+    background-color: #ffb300;
+}
+
+.cerrar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.cerrar:hover {
+    color: #ffb300;
+}
+
+#productos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 40px 20px;
+    justify-items: center;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+#productos-categorias {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+    text-align: center;  
+}
+
+#productos-categorias a {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding: 12px 25px;
+    background-color: #ffb300;
+    border-radius: 30px;  
+    transition: background-color 0.3s, color 0.3s;
+    text-transform: uppercase;
+}
+
+#productos-categorias a:hover {
+    background-color: #1b1b1b;
+    color: #fff;
+}
+
+/* Producto */
+.producto {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    max-width: 250px;
+}
+
+.producto:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.producto img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.producto img:hover {
+    transform: scale(1.1);
+}
+
+.producto h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin: 15px 0;
+}
+
+.producto p {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.producto button {
+    padding: 10px;
+    background-color: #ffb300;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 600;
+}
+
+.producto button:hover {
+    background-color: #1b1b1b;
+}
+
+#carrito {
+    position: fixed;
+    top: 200px;
+    right: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    z-index: 10;
+    font-size: 14px;
+}
+
+#carrito h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#carrito ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+#carrito ul li {
+    font-size: 14px;
+    color: #777;
+}
+
+#carrito #total {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#carrito button {
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+#carrito button:hover {
+    background-color: #1b1b1b;
+}
+
+
+#detalles-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+#detalles-modal .modal-contenido {
+    width: 400px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+#detalles-modal img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+#detalles-modal h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+#detalles-modal p {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+#detalles-modal button {
+    padding: 12px 20px;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+#detalles-modal button:hover {
+    background-color: #1b1b1b;
+}
+
+
+#productos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+    justify-items: center;
+}
+
+#productos-container .producto {
+    flex-shrink: 0;
+    margin-right: 20px;
+    width: 250px;
+}
+
+#volver {
+    padding: 12px 25px;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#volver:hover {
+    background-color: #1b1b1b;
+}
+
+/* Estilos para la sección de categorías */
+.categorias {
+    display: flex;
+    justify-content: center;  
+    align-items: center;    
+    flex-wrap: wrap;          
+    gap: 20px;                
+    margin-top: 50px;        
+    padding: 20px;
+}
+
+.categoria {
+    background-color: #1b1b1b;  
+    color: #fff;              
+    font-size: 18px;            
+    font-weight: bold;          
+    padding: 12px 25px;          
+    border-radius: 50px;        
+    border: 2px solid #ffb300;  
+    cursor: pointer;            
+    text-transform: uppercase;  
+    transition: all 0.3s ease;  
+}
+
+.categoria:hover {
+    background-color: #ffb300;  
+    color: #1b1b1b;            
+    border: 2px solid #1b1b1b;    
+}
+
+.categoria:active {
+    background-color: #d48800;  
+    color: #fff;                  
+}
+/* Estilos para la sección de productos populares */
+#populares {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    padding: 20px;
+    margin-top: 40px;
+    background-color: #f5f5f5;
+}
+
+#populares h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#ver-populares {
+    padding: 12px 20px;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#ver-populares:hover {
+    background-color: #1b1b1b;
+}
+
+#populares-container {
+    display: flex; 
+    flex-direction: row; 
+    gap: 30px; 
+    overflow-x: auto; 
+    margin-top: 20px;
+    width: 100%; 
+    justify-content: flex-start; 
+    flex-wrap: nowrap; 
+    overflow: hidden; 
+}
+
+.producto-popular {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 200px; /* Ancho fijo para los productos */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 300px; 
+    flex-shrink: 0; 
+}
+
+.producto-popular img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.producto-popular h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin: 15px 0;
+}
+
+.producto-popular p {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.producto-popular button {
+    padding: 10px;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.producto-popular button:hover {
+    background-color: #1b1b1b;
+}
+
+#btn-iniciar-sesion {
+    padding: 10px 20px;
+    background-color: #ff5733; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    margin-left: 20px; 
+}
+
+#btn-iniciar-sesion:hover {
+    background-color: #e04d00; 
+    transform: translateY(-2px); 
+}
+
+#btn-iniciar-sesion:active {
+    transform: translateY(2px); 
+}
+
+
+#modal-login {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Estilos para el contenido del modal */
+.modal-contenido {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+}
+
+.cerrar:hover {
+    color: #ff5733;
+}
+
+/* Carrito */
+.carrito-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.carrito-item button.eliminar {
+    background-color: transparent;
+    border: none;
+    color: #cc0000;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+/* Modal general */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.cerrar {
+    float: right;
+    font-size: 22px;
+    color: #888;
+    cursor: pointer;
+}
+
+/* Campos de pago */
+.hidden {
+    display: none;
+}
+
+#efectivo-campo,
+#tarjeta-campo {
+    margin-top: 15px;
+}
+
+/* Responsive (opcional mejora) */
+@media (max-width: 600px) {
+    .modal-contenido {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .carrito-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .carrito-item button.eliminar {
+        align-self: flex-end;
+    }
+}
+
+#btn-Iniciar-Sesion,
+#btn-carrito {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#btn-Iniciar-Sesion:hover,
+#btn-carrito:hover {
+    background-color: black;
+    color: white;
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <img src="Logo.png" alt="Logo de Food Delivery">
+    </div>
+    <div class="contacto">
+        <span>Teléfono: 123-456-789</span>
+        <div class="redes">
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+            <a href="https://twitter.com" target="_blank">Twitter</a>
+        </div>
+    </div>
+    <input type="text" id="search" placeholder="Buscar productos..." class="search-input">
+    <a href="iniciar-sesion.html"><button id="btn-Iniciar-Sesion">Iniciar Sesion</button></a>
+    <a href="ver carrito.html"><button id="btn-carrito">Ver Carrito</button></a>
+</header>
+
+<main>
+    <!-- Productos Populares -->
+    <section id="populares">
+        <h2>Productos Populares</h2>
+        <button id="ver-populares">Ver Productos Populares</button>
+        <div id="populares-container" style="display: none;"></div>
+    </section>
+
+    <!-- Categorías -->
+    <section class="categorias">
+        <button class="categoria" data-categoria="hamburguesas">Hamburguesas</button>
+        <button class="categoria" data-categoria="Moles">Moles</button>
+        <button class="categoria" data-categoria="Bisteces">Bisteces</button>
+        <button class="categoria" data-categoria="Nuggets">Nuggets</button>
+        <button class="categoria" data-categoria="bebidas">Bebidas</button>
+        <button id="regresar-todos" style="display: none;">Regresar a Todos los Productos</button>
+    </section>
+
+    <!-- Productos -->
+    <section class="productos">
+        <div id="productos-container"></div>
+    </section>
+</main>
+
+<!-- Modal Detalles -->
+<div id="detalles-modal" class="modal">
+    <div class="modal-contenido">
+        <span id="cerrar-detalles" class="cerrar">&times;</span>
+        <img id="detalle-imagen" alt="Imagen del producto">
+        <h3 id="detalle-nombre"></h3>
+        <p id="detalle-descripcion"></p>
+        <p id="detalle-precio"></p>
+        <button id="volver">Volver</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let totalCarrito = carrito.reduce((acc, prod) => acc + prod.precio, 0);
+
+        const productos = [
+            { id: 1, nombre: 'Hamburguesa Especial', categoria: 'hamburguesas', precio: 7.99, imagen: 'Hamburguesa.png', descripcion: 'Deliciosa hamburguesa con carne jugosa, queso y vegetales frescos.' },
+            { id: 2, nombre: 'Mole', categoria: 'Moles', precio: 9.99, imagen: 'Mole.png', descripcion: 'Mole dulce con arroz y pollo incluido.' },
+            { id: 3, nombre: 'Bistec', categoria: 'Bisteces', precio: 12.99, imagen: 'Bistec.png', descripcion: 'Variedad de bistec con chile morron y puré de papa.' },
+            { id: 4, nombre: 'Nuggets con papas', categoria: 'Nuggets', precio: 6.50, imagen: 'Nuggets con papas.png', descripcion: 'Nuggets de pollo con papas fritas.' },
+            { id: 5, nombre: 'Coca Cola', categoria: 'bebidas', precio: 1.99, imagen: 'Coca.png', descripcion: 'Refresco de cola refrescante.' },
+            { id: 6, nombre: 'Pepsi', categoria: 'bebidas', precio: 1.50, imagen: 'Pepsi.png', descripcion: 'Refresco de Pepsi refrescante.' },
+            { id: 7, nombre: 'Jugo de Mango', categoria: 'bebidas', precio: 2.50, imagen: 'Jugo de mango.png', descripcion: 'Jugo natural de mango.' },
+        ];
+
+        const productosPopulares = [
+            { id: 1, nombre: 'Jugo de mango', categoria: 'bebidas', precio: 11.99, imagen: 'Jugo de mango.png', descripcion: 'Pizza con ingredientes especiales, salsa y queso gourmet.' },
+            { id: 2, nombre: 'Bisteces', categoria: 'Bisteces', precio: 14.99, imagen: 'Bistec.png', descripcion: 'Sushi con pescado fresco y acompañamiento de arroz especial.' },
+            { id: 3, nombre: 'Hamburguesa Especial', categoria: 'hamburguesas', precio: 8.50, imagen: 'Hamburguesa.png', descripcion: 'Hamburguesa vegana con ingredientes frescos y pan artesanal.' }
+        ];
+
+        const productosContainer = document.getElementById('productos-container');
+        const popularesContainer = document.getElementById('populares-container');
+        const verPopularesBtn = document.getElementById('ver-populares');
+        const detallesModal = document.getElementById('detalles-modal');
+        const detalleImagen = document.getElementById('detalle-imagen');
+        const detalleNombre = document.getElementById('detalle-nombre');
+        const detalleDescripcion = document.getElementById('detalle-descripcion');
+        const detallePrecio = document.getElementById('detalle-precio');
+        const volverBtn = document.getElementById('volver');
+        const regresarBtn = document.getElementById('regresar-todos');
+        const searchInput = document.getElementById('search');
+
+        function guardarCarrito() {
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+        }
+
+        function mostrarProductos(categoria = null) {
+            productosContainer.innerHTML = '';
+            const filtrados = categoria ? productos.filter(p => p.categoria === categoria) : productos;
+
+            filtrados.forEach(producto => {
+                const divProducto = document.createElement('div');
+                divProducto.classList.add('producto');
+                divProducto.innerHTML = `
+                    <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-img">
+                    <h3>${producto.nombre}</h3>
+                    <p>$${producto.precio.toFixed(2)}</p>
+                    <button class="comprar" data-id="${producto.id}">Agregar al carrito</button>
+                    <button class="ver-detalles" data-id="${producto.id}">Ver Detalles</button>
+                `;
+                productosContainer.appendChild(divProducto);
+            });
+
+            document.querySelectorAll('.comprar').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.getAttribute('data-id');
+                    const producto = productos.find(p => p.id == id);
+                    carrito.push(producto);
+                    totalCarrito += producto.precio;
+                    guardarCarrito();
+                });
+            });
+
+            document.querySelectorAll('.ver-detalles').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.getAttribute('data-id');
+                    const producto = productos.find(p => p.id == id);
+                    detalleImagen.src = producto.imagen;
+                    detalleNombre.textContent = producto.nombre;
+                    detalleDescripcion.textContent = producto.descripcion;
+                    detallePrecio.textContent = `$${producto.precio.toFixed(2)}`;
+                    detallesModal.style.display = 'flex';
+                });
+            });
+        }
+
+        volverBtn.addEventListener('click', () => {
+            detallesModal.style.display = 'none';
+        });
+
+        verPopularesBtn.addEventListener('click', () => {
+            if (popularesContainer.style.display === 'none' || popularesContainer.style.display === '') {
+                popularesContainer.style.display = 'block';
+                verPopularesBtn.textContent = 'Ocultar Productos Populares';
+                popularesContainer.innerHTML = '';
+                productosPopulares.forEach(producto => {
+                    const div = document.createElement('div');
+                    div.classList.add('producto');
+                    div.innerHTML = `
+                        <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-img">
+                        <h3>${producto.nombre}</h3>
+                        <p>$${producto.precio.toFixed(2)}</p>
+                        <button class="comprar" data-id="${producto.id}">Agregar al carrito</button>
+                        <button class="ver-detalles" data-id="${producto.id}">Ver Detalles</button>
+                    `;
+                    popularesContainer.appendChild(div);
+                });
+            } else {
+                popularesContainer.style.display = 'none';
+                verPopularesBtn.textContent = 'Ver Productos Populares';
+            }
+        });
+
+        document.querySelectorAll('.categoria').forEach(btn => {
+            btn.addEventListener('click', () => {
+                mostrarProductos(btn.getAttribute('data-categoria'));
+                regresarBtn.style.display = 'inline-block';
+            });
+        });
+
+        regresarBtn.addEventListener('click', () => {
+            mostrarProductos();
+            regresarBtn.style.display = 'none';
+        });
+
+        searchInput.addEventListener('input', () => {
+            const term = searchInput.value.toLowerCase();
+            const filtrados = productos.filter(p => p.nombre.toLowerCase().includes(term));
+            productosContainer.innerHTML = '';
+            filtrados.forEach(producto => {
+                const divProducto = document.createElement('div');
+                divProducto.classList.add('producto');
+                divProducto.innerHTML = `
+                    <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-img">
+                    <h3>${producto.nombre}</h3>
+                    <p>$${producto.precio.toFixed(2)}</p>
+                    <button class="comprar" data-id="${producto.id}">Agregar al carrito</button>
+                    <button class="ver-detalles" data-id="${producto.id}">Ver Detalles</button>
+                `;
+                productosContainer.appendChild(divProducto);
+            });
+        });
+
+        mostrarProductos();
+    });
+</script>
+
+</body>
+</html>
