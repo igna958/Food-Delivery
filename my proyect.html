@@ -27,14 +27,12 @@
 </header>
 
 <main>
-    <!-- Productos Populares -->
     <section id="populares">
         <h2>Productos Populares</h2>
         <button id="ver-populares">Ver Productos Populares</button>
         <div id="populares-container" style="display: none;"></div>
     </section>
-
-    <!-- Categorías -->
+    
     <section class="categorias">
         <button class="categoria" data-categoria="hamburguesas">Hamburguesas</button>
         <button class="categoria" data-categoria="Moles">Moles</button>
@@ -44,13 +42,11 @@
         <button id="regresar-todos" style="display: none;">Regresar a Todos los Productos</button>
     </section>
 
-    <!-- Productos -->
     <section class="productos">
         <div id="productos-container"></div>
     </section>
 </main>
 
-<!-- Modal Detalles -->
 <div id="detalles-modal" class="modal">
     <div class="modal-contenido">
         <span id="cerrar-detalles" class="cerrar">&times;</span>
@@ -78,9 +74,9 @@
         ];
 
         const productosPopulares = [
-            { id: 1, nombre: 'Jugo de mango', categoria: 'bebidas', precio: 11.99, imagen: 'Jugo de mango.png', descripcion: 'Pizza con ingredientes especiales, salsa y queso gourmet.' },
-            { id: 2, nombre: 'Bisteces', categoria: 'Bisteces', precio: 14.99, imagen: 'Bistec.png', descripcion: 'Sushi con pescado fresco y acompañamiento de arroz especial.' },
-            { id: 3, nombre: 'Hamburguesa Especial', categoria: 'hamburguesas', precio: 8.50, imagen: 'Hamburguesa.png', descripcion: 'Hamburguesa vegana con ingredientes frescos y pan artesanal.' }
+            { id: 1, nombre: 'Jugo de mango', categoria: 'bebidas', precio: 2.50, imagen: 'Jugo de mango.png', descripcion: 'Pizza con ingredientes especiales, salsa y queso gourmet.' },
+            { id: 2, nombre: 'Bisteces', categoria: 'Bistec', precio: 12.99, imagen: 'Bistec.png', descripcion: 'Sushi con pescado fresco y acompañamiento de arroz especial.' },
+            { id: 3, nombre: 'Hamburguesa Especial', categoria: 'hamburguesas', precio: 7.50, imagen: 'Hamburguesa.png', descripcion: 'Hamburguesa vegana con ingredientes frescos y pan artesanal.' }
         ];
 
         const productosContainer = document.getElementById('productos-container');
