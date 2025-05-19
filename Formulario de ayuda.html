@@ -8,6 +8,17 @@
 </head>
 <body>
 
+    <form action="https://formspree.io/f/mwpozkqo"
+             method="POST">
+
+             <input type="text" name="Nombre" placeholder="Tu Nombre" required>
+             <input type="email" name="Email" placeholder="Tu Correo" required>
+             <textarea name="mensaje" placeholder="Escribe tu mensaje aqui" required> 
+             </textarea>
+             <button type="submit">Enviar</button>
+            </form>
+   
+
     <div class="container">
         <header>
             <h1>Formulario de Contacto</h1>
@@ -71,24 +82,6 @@
 
             }, 3000);
         });
-
-        <!-- modify this form HTML and place wherever you want your form -->
-<form
-  action="https://formspree.io/f/mwpozkqo"
-  method="POST"
->
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
-</form>
-        
     </script>
 
 </body>
